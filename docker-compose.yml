@@ -5,6 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     tty: true
+    env_file: .env
     depends_on:
       - db
     volumes:
@@ -18,11 +19,10 @@ services:
     container_name: mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: express_startkit_development
+      MYSQL_DATABASE: express_demo_development
       MYSQL_USER: root
       MYSQL_PASSWORD: password
       TZ: 'Asia/Tokyo'
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports:
     - 3306:3306
-

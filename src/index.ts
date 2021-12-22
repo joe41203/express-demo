@@ -42,10 +42,10 @@ app.post("/users", async (req: express.Request, res: express.Response) => {
 	try {
 		const name = req.body.name;
 		const user = await createUser(name);
-		console.log(user);
+		res.send(JSON.stringify(user));
 	} catch (err) {
-		console.log("something happned...");
-		res.redirect("/users");
+		console.log(err)
+		res.send(JSON.stringify(err));
 	}
 
 	await prisma.$disconnect();
