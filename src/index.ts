@@ -44,7 +44,6 @@ app.post("/users", async (req: express.Request, res: express.Response) => {
 		const user = await createUser(name);
 		res.send(JSON.stringify(user));
 	} catch (err) {
-		console.log(err)
 		res.send(JSON.stringify(err));
 	}
 
@@ -57,8 +56,7 @@ app.get("/users", async (req: express.Request, res: express.Response) => {
 		console.log(users);
 		res.send(JSON.stringify(users));
 	} catch (err) {
-		console.log(err);
-		process.exit(1);
+		res.send(JSON.stringify(err));
 	}
 	await prisma.$disconnect();
 });
