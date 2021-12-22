@@ -38,34 +38,27 @@ const getUsers = async (): Promise<any> => {
 	return await prisma.user.findMany();
 };
 
-app.post("/users", (req: express.Request, res: express.Response) => {
-	const name = req.body.name;
-	console.log(name);
-	createUser(name)
-		.then((user) => {
-			console.log(user);
-			res.redirect("/users");
-		})
-		.catch((err) => {
-			console.log(err);
-			res.redirect("/users");
-		})
-		.finally(async () => {
-			await prisma.$disconnect();
-		});
+app.post("/users", async (req: express.Request, res: express.Response) => {
+	try {
+		const name = req.body.name;
+		const user = await createUser(name);
+		console.log(user);
+	} catch (err) {
+		console.log("something happned...");
+		res.redirect("/users");
+	}
+
+	await prisma.$disconnect();
 });
 
-app.get("/users", (req: express.Request, res: express.Response) => {
-	getUsers()
-		.then((users) => {
-			console.log(users);
-			res.send(JSON.stringify(users));
-		})
-		.catch((err) => {
-			console.log(err);
-			process.exit(1);
-		})
-		.finally(async () => {
-			await prisma.$disconnect();
-		});
+app.get("/users", async (req: express.Request, res: express.Response) => {
+	try {
+		const users = await getUsers();
+		console.log(users);
+		res.send(JSON.stringify(users));
+	} catch (err) {
+		console.log(err);
+		process.exit(1);
+	}
+	await prisma.$disconnect();
 });
