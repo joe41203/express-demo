@@ -11,6 +11,7 @@ RUN npm run build
 
 FROM node:17.3-alpine
 WORKDIR /app
+RUN apk update
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 COPY --from=builder /app/node_modules /app/node_modules

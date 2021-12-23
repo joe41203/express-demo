@@ -1,6 +1,6 @@
 .PHONY: setup
 setup:
-	@cp .env.template .env
-	@docker-compose build --no-cache
-	@docker-compose run app npx prisma migrate dev --name init
-	@docker-compose up
+	cp .env.template .env
+	docker-compose build
+	docker-compose run --rm app /bin/sh -c '/app/scripts/init.sh'
+	docker-compose up
