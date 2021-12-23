@@ -4,5 +4,6 @@ RUN apk update && apk add mysql-client
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 RUN npm install
+COPY prisma prisma
 RUN npx prisma generate
 EXPOSE 3000
